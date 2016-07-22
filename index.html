@@ -2,11 +2,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Title of the document</title>
+<title>Upload a file</title>
 </head>
 
 <body>
- Upload here your file
+
+<input type="file" id="input_file"/>
+<image id="image_uploaded"/>
+
+
+<script>
+  function showFile(evt) {
+	var uploadedFile = evt.target.files[0]; 
+	var reader = new FileReader();
+	reader.onload = function(e) { 
+	   document.getElementById('image_uploaded').src = e.target.result;
+	}
+	reader.readAsDataURL(uploadedFile);
+  }
+  document.getElementById('input_file').addEventListener('change', showFile, false);
+</script>
 </body>
 
 </html> 
