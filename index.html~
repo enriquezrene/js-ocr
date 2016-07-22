@@ -11,7 +11,7 @@
 <image id="image_uploaded"/>
 
 <script src="js/jquery-1.12.4.min.js"></script>
-<script src="js/jquery-jcrop.js"></script>
+<script src="js/jquery.Jcrop.min.js"></script>
 <link rel="stylesheet" href="http://jcrop-cdn.tapmodo.com/v0.9.12/css/jquery.Jcrop.css" type="text/css" />
 <script>
 
