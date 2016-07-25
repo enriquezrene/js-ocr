@@ -9,31 +9,40 @@
 
 <input type="file" id="input_file"/>
 <image id="image_uploaded"/>
+<hr></hr>
+<button onclick="do_ocr()">OCR</button>
+<hr></hr>
+OCR: <div id="text_processed"></div>
+
+
 
 <script src="js/jquery-1.12.4.min.js"></script>
 <script src="js/jquery-jcrop.js"></script>
+<script src="js/ocrad.js"></script> 
 <link rel="stylesheet" href="http://jcrop-cdn.tapmodo.com/v0.9.12/css/jquery.Jcrop.css" type="text/css" />
 <script>
 
   function showFile(evt) {
 	var uploadedFile = evt.target.files[0]; 
 	var reader = new FileReader();
-	reader.onload = function(e) { 
-	   document.getElementById('image_uploaded').src = e.target.result;
-	   addCropOnImage();
+		reader.onload = function(e) { 
+		document.getElementById('image_uploaded').src = e.target.result;
 	}
 	reader.readAsDataURL(uploadedFile);
   }
 
-  function addCropOnImage(){
-      $('#image_uploaded').Jcrop();
+  function do_ocr(){
+    OCRAD(document.getElementById("image_uploaded"), function(text){
+			document.getElementById("text_processed").innerHTML = text;
+			document.getElementById('input_file').value = "";
+	});
   }
 
   document.getElementById('input_file').addEventListener('change', showFile, false);
-
   
 </script>
 
-</body>
 
+
+</body>
 </html> 
