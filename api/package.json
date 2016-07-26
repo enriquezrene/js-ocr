@@ -1,0 +1,31 @@
+{
+  "name": "js-ocr",
+  "version": "1.0.0",
+  "description": "OCR project based on pure JS and HTML",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enriquezrene/js-ocr.git"
+  },
+  "keywords": [
+    "ocr",
+    "js",
+    "html",
+    "ocrad"
+  ],
+  "author": "René Enríquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enriquezrene/js-ocr/issues"
+  },
+  "dependencies": {
+    "express": "3.x"
+  },
+  "homepage": "https://github.com/enriquezrene/js-ocr#readme",
+  "devDependencies": {
+    "mongoose": "^4.5.7"
+  }
+}
