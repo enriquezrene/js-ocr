@@ -10,10 +10,14 @@
 <input type="file" id="input_file"/>
 <image id="image_uploaded"/>
 <hr>
+
+<figure>
+    <canvas id="croppedImage"></canvas>
+</figure>
+
+<hr>
 <button onclick="printCoordinates()">Get marked coordinates</button>
 <div id="coordinates"></div>
-<hr>
-<button onclick="do_ocr()">OCR</button>
 <hr>
 OCR:
 <div id="text_processed"></div>
@@ -35,13 +39,6 @@ OCR:
         reader.readAsDataURL(uploadedFile);
     }
 
-    function do_ocr() {
-        OCRAD(document.getElementById("image_uploaded"), function (text) {
-            document.getElementById("text_processed").innerHTML = text;
-            document.getElementById('input_file').value = "";
-        });
-    }
-
     var jcrop_api;
 
     function addCropOnImage(){
@@ -53,7 +50,35 @@ OCR:
     }
 
     function printCoordinates(){
+        var uploadedImage = document.getElementById("image_uploaded");
+        var cropData = jcrop_api.tellSelect();
+
+        var scale = 1;
+
+        var canvas = document.getElementById('croppedImage');
+        //draw cropped image on the canvas
+        canvas.width = cropData.w * scale;
+        canvas.height = cropData.h * scale;
+
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(
+            uploadedImage,
+            cropData.x * scale,
+            cropData.y * scale,
+            cropData.w * scale,
+            cropData.h * scale,
+            0,
+            0,
+            cropData.w * scale,
+            cropData.h * scale);
+
         document.getElementById("coordinates").innerHTML = JSON.stringify(jcrop_api.tellSelect());
+
+
+        var resultText = OCRAD(ctx);
+        resultText = resultText.trim();
+        document.getElementById("text_processed").innerHTML = resultText;
+        document.getElementById('input_file').value = "";
     }
 
     document.getElementById('input_file').addEventListener('change', showFile, false);
