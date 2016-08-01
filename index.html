@@ -3,24 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload a file</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-<input type="file" id="input_file"/>
-<image id="image_uploaded"/>
-<hr>
 
-<figure>
-    <canvas id="croppedImage"></canvas>
-</figure>
+<div class="panel panel-default">
+    <div class="panel-body">
 
-<hr>
-<button onclick="printCoordinates()">Get marked coordinates</button>
-<div id="coordinates"></div>
-<hr>
-OCR:
-<div id="text_processed"></div>
+        <div class="list-group">
+            <a href="#" class="list-group-item">1. Upload a picture</a>
+            <a href="#" class="list-group-item">2. Crop uploaded image drawing a square with your mouse</a>
+            <a href="#" class="list-group-item">3. Press "OCR from cropped image"</a>
+        </div>
+
+            <h2>Choose a picture:</h2>
+            <input type="file" id="input_file" class="btn btn-default">
+
+            <hr>
+            <h3>RESULT TEXT FROM OCR:</h3>
+            <h1>
+                <span class="label label-info" id="text_processed"></span>
+            </h1>
+
+            <hr>
+
+            CROPPED IMAGE:
+            <figure>
+                <canvas id="croppedImage"></canvas>
+            </figure>
+
+            <hr>
+            <button type="button" class="btn btn-default" onclick="printCoordinates()">
+                OCR from cropped image
+            </button>
+
+            <hr>
+            <div id="coordinates"></div>
+            <hr>
+            <image id="image_uploaded"/>
+
+
+
+        </div>
+    </div>
 
 
 <script src="js/jquery-1.12.4.min.js"></script>
@@ -53,24 +87,22 @@ OCR:
         var uploadedImage = document.getElementById("image_uploaded");
         var cropData = jcrop_api.tellSelect();
 
-        var scale = 1;
-
         var canvas = document.getElementById('croppedImage');
         //draw cropped image on the canvas
-        canvas.width = cropData.w * scale;
-        canvas.height = cropData.h * scale;
+        canvas.width = cropData.w;
+        canvas.height = cropData.h;
 
         var ctx = canvas.getContext('2d');
         ctx.drawImage(
             uploadedImage,
-            cropData.x * scale,
-            cropData.y * scale,
-            cropData.w * scale,
-            cropData.h * scale,
+            cropData.x,
+            cropData.y,
+            cropData.w,
+            cropData.h,
             0,
             0,
-            cropData.w * scale,
-            cropData.h * scale);
+            cropData.w,
+            cropData.h);
 
         document.getElementById("coordinates").innerHTML = JSON.stringify(jcrop_api.tellSelect());
 
