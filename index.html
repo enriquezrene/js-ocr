@@ -17,33 +17,39 @@
 
 
 <div class="panel panel-default">
-    <div class="panel-heading">OCR</div>
     <div class="panel-body">
 
+        <div class="list-group">
+            <a href="#" class="list-group-item">1. Upload a picture</a>
+            <a href="#" class="list-group-item">2. Crop uploaded image drawing a square with your mouse</a>
+            <a href="#" class="list-group-item">3. Press "OCR from cropped image"</a>
+        </div>
 
-                <h2>Choose a picture:</h2>
-                <input type="file" id="input_file" class="btn btn-default">
+            <h2>Choose a picture:</h2>
+            <input type="file" id="input_file" class="btn btn-default">
 
-        <hr>
+            <hr>
+            <h3>RESULT TEXT FROM OCR:</h3>
+            <h1>
+                <span class="label label-info" id="text_processed"></span>
+            </h1>
 
-        <figure>
-            <canvas id="croppedImage"></canvas>
-        </figure>
+            <hr>
 
-        <hr>
-        <button type="button" class="btn btn-default" onclick="printCoordinates()">
-            Print marked coordinates and OCR text
-        </button>
+            CROPPED IMAGE:
+            <figure>
+                <canvas id="croppedImage"></canvas>
+            </figure>
 
-        <div id="coordinates"></div>
-        <hr>
-        OCR:
-        <h1>
-            <span class="label label-success" id="text_processed"></span>
-        </h1>
+            <hr>
+            <button type="button" class="btn btn-default" onclick="printCoordinates()">
+                OCR from cropped image
+            </button>
 
-        <hr>
-                <image id="image_uploaded"/>
+            <hr>
+            <div id="coordinates"></div>
+            <hr>
+            <image id="image_uploaded"/>
 
 
 
@@ -81,24 +87,22 @@
         var uploadedImage = document.getElementById("image_uploaded");
         var cropData = jcrop_api.tellSelect();
 
-        var scale = 1;
-
         var canvas = document.getElementById('croppedImage');
         //draw cropped image on the canvas
-        canvas.width = cropData.w * scale;
-        canvas.height = cropData.h * scale;
+        canvas.width = cropData.w;
+        canvas.height = cropData.h;
 
         var ctx = canvas.getContext('2d');
         ctx.drawImage(
             uploadedImage,
-            cropData.x * scale,
-            cropData.y * scale,
-            cropData.w * scale,
-            cropData.h * scale,
+            cropData.x,
+            cropData.y,
+            cropData.w,
+            cropData.h,
             0,
             0,
-            cropData.w * scale,
-            cropData.h * scale);
+            cropData.w,
+            cropData.h);
 
         document.getElementById("coordinates").innerHTML = JSON.stringify(jcrop_api.tellSelect());
 
